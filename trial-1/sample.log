@@ -1,0 +1,10 @@
+2026-09-01 10:00:01 INFO  server started on 0.0.0.0:8000
+2026-09-01 10:00:05 INFO  model loading
+2026-09-01 10:02:11 WARN  slow kernel compile detected
+2026-09-01 10:12:16 INFO  ready
+2026-09-01 10:15:02 ERROR tunnel authentication failed: invalid authtoken
+2026-09-01 10:15:03 INFO  retrying tunnel
+2026-09-01 10:15:09 ERROR upstream not reachable: 502
+2026-09-01 10:16:40 WARN  session idle
+2026-09-01 10:20:00 ERROR EngineCore KeyboardInterrupt
+2026-09-01 10:20:01 INFO  shutdown
