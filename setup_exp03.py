@@ -15,6 +15,7 @@ import shutil
 HOME = os.path.expanduser("~")
 SRC = os.path.join(HOME, "harness-experiment-01", "fixtures")
 ROOT = os.path.join(HOME, "exp03")
+CONTROL = os.path.join(HOME, "exp03-control")   # 정답·계획서 격리 위치
 FIXTURES = ["sample.log", "util.py", "test_me.py"]
 
 # 조건 배치 — 실험 시작 전 확정. 이후 변경하지 않는다.
@@ -141,10 +142,16 @@ if os.path.isdir(ROOT):
     shutil.rmtree(ROOT)
 os.makedirs(ROOT)
 
-with open(os.path.join(ROOT, "PLAN.md"), "w", encoding="utf-8", newline="\n") as f:
+# 계획서와 정답 요약은 ROOT 아래에 두지 않는다.
+# A 조건 세션이 상위 폴더를 훑으면 정답을 보게 되어 조건이 깨진다.
+if os.path.isdir(CONTROL):
+    shutil.rmtree(CONTROL)
+os.makedirs(CONTROL)
+
+with open(os.path.join(CONTROL, "PLAN.md"), "w", encoding="utf-8", newline="\n") as f:
     f.write(README)
 
-notes_dir = os.path.join(ROOT, "notes")
+notes_dir = os.path.join(CONTROL, "notes")
 os.makedirs(notes_dir)
 approach_path = os.path.join(notes_dir, "approach.md")
 with open(approach_path, "w", encoding="utf-8", newline="\n") as f:
@@ -170,7 +177,9 @@ for i, (folder, cond) in enumerate(PLAN, 1):
     label = "A (notes 없음)" if cond == "A" else "B (notes 참조)"
     print("  %d  | %-7s | %-14s | %s" % (i, folder, label, " ".join(items)))
 print("")
-print("계획서: " + os.path.join(ROOT, "PLAN.md"))
+print("계획서: " + os.path.join(CONTROL, "PLAN.md"))
 print("기록  : " + approach_path)
+print("")
+print("상위 폴더 정답 노출: 없음 (PLAN.md·notes 는 " + CONTROL + " 에 있음)")
 print("")
 print("다음: cd ~/exp03/run-1 && claude   (Sonnet 5 / manual 확인)")
